@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to CampFinder</h1>
+            <p>Locate Camps across the Globe with just a click</p>
+            <a class="btn btn-primary" href="/campgrounds/new"> Add New Camp</a>
+        </div>
+    </header>
+
+    <div class="row">
+        <% Camps.forEach(camp => { %>
+            <div class=" cq img-thumbnail">
+            <div class=" col-md-4 col-sm-6 ">
+                <img src=<%= camp.image %> alt="camp.name">
+                <caption>
+                    <p class="captionText"><%= camp.name %></p>
+                </caption>
+            </div>
+        </div>
+            <% }) %>
+    </div>
+</div>
+</div>
+
+
+<%- include('partials/footer') %>
