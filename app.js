@@ -9,57 +9,51 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-mongoose.connect("mongodb://localhost:27017/UsersDB", {
+mongoose.connect("mongodb://localhost:27017/CampsDB", {
   useNewUrlParser: true,
 });
 
-const personSchema = mongoose.Schema({
+//CREATE A SCHEMA FOR DATABASE DATA FORMATING
+
+const campSchema = mongoose.Schema({
   name: String,
-  age: Number,
+  image: String,
 });
 
-const Person = mongoose.model("Person", personSchema);
-
-Person.create({
-  name: "Safari",
-  age: 22,
-});
-
-// Variables and Appropriate Logic
-
-var Camps = [];
-
-for (let i = 0; i < 10; i++) {
-  let place = {
-    name: faker.address.county(),
-    image: faker.image.image(),
-  };
-
-  Camps.push(place);
-}
-
-app.set("view engine", "ejs");
+//CREATE A SINGLE DATA ENTITY MODEL
+const Camp = mongoose.model("Camp", campSchema);
 
 app.get("/", (req, res) => {
   res.render("landing");
 });
 
 app.get("/campgrounds", (req, res) => {
-  res.render("campgrounds", { Camps });
-  console.log(Camps);
+  Camp.find({}, (error, allCamps) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.render("campgrounds", { Camps: allCamps });
+      console.log(allCamps);
+    }
+  });
 });
 
 app.post("/campgrounds", (req, res) => {
   //   res.send("You have Hit the Campgrounds Post Page");
-  var newPlace = {
+  var newCamp = {
     name: req.body.camp,
     image: req.body.image,
   };
-  console.log(newPlace);
+  console.log(newCamp);
 
-  Camps.push(newPlace);
-
-  res.redirect("/campgrounds");
+  Camp.create(newCamp, (error, newCamp) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.redirect("/campgrounds");
+      console.log(newCamp);
+    }
+  });
 });
 
 app.get("/campgrounds/new", (req, res) => {

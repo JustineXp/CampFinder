@@ -2,47 +2,38 @@ header {
   text-align: center;
 }
 
-img {
-  width: 300px;
-}
-
-.landing {
-  text-align: center;
-  padding: 20px 10px;
-}
-
-.landing h1 {
-  font-size: 150px;
-  margin-top: 50px;
-  margin-bottom: 100px;
+.centered {
+  margin: 0, auto;
 }
 
 .jumbotron {
   background: white;
 }
 
-.cq {
-  margin: 10px 10px;
-}
-
-.captionText {
-  margin-top: 5px;
-  font-weight: 600;
+img {
+  width: 100%;
 }
 
 .img-thumbnail {
   padding: 0;
 }
 
+.captionText {
+  text-align: center;
+  font-weight: 600;
+}
+
 .pageBottom {
   text-align: center;
-  margin: 30px 0;
+  margin: 20px 0;
 }
+
+/* STYLES FOR THE NEW FORM */
 
 .resized {
   margin: 50px auto;
 }
+
 .resized h1 {
-  text-align: center;
   font-size: 20px;
 }
