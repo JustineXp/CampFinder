@@ -1,4 +1,5 @@
 //Required and constants
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 var faker = require("faker");
@@ -8,7 +9,24 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
+mongoose.connect("mongodb://localhost:27017/UsersDB", {
+  useNewUrlParser: true,
+});
+
+const personSchema = mongoose.Schema({
+  name: String,
+  age: Number,
+});
+
+const Person = mongoose.model("Person", personSchema);
+
+Person.create({
+  name: "Safari",
+  age: 22,
+});
+
 // Variables and Appropriate Logic
+
 var Camps = [];
 
 for (let i = 0; i < 10; i++) {
