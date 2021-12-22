@@ -19,6 +19,7 @@ img {
 }
 
 .captionText {
+  margin-top: 5px;
   text-align: center;
   font-weight: 600;
 }
@@ -36,4 +37,9 @@ img {
 
 .resized h1 {
   font-size: 20px;
+}
+
+.eachCamp a {
+  text-decoration: none;
+  color: black;
 }

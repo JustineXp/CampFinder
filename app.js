@@ -18,6 +18,7 @@ mongoose.connect("mongodb://localhost:27017/CampsDB", {
 const campSchema = mongoose.Schema({
   name: String,
   image: String,
+  description: String,
 });
 
 //CREATE A SINGLE DATA ENTITY MODEL
@@ -43,6 +44,7 @@ app.post("/campgrounds", (req, res) => {
   var newCamp = {
     name: req.body.camp,
     image: req.body.image,
+    description: req.body.description,
   };
   console.log(newCamp);
 
@@ -58,6 +60,17 @@ app.post("/campgrounds", (req, res) => {
 
 app.get("/campgrounds/new", (req, res) => {
   res.render("new");
+});
+
+app.get("/campgrounds/:id", (req, res) => {
+  let campId = req.params.id;
+  Camp.findById(campId, (error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.render("show", { result });
+    }
+  });
 });
 
 app.listen(3000, (req, res) => {

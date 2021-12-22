@@ -14,7 +14,9 @@
         <% Camps.forEach(camp => { %>
         <div class="eachCamp img-thumbnail col-lg-4 col-md-6">
           <img src="<%=camp.image %>" alt="<%=camp.name %>" />
-          <p class="captionText"><%= camp.name %></p>
+          <a href="/campgrounds/<%=camp._id %>">
+            <p class="captionText"><%= camp.name %></p>
+          </a>
         </div>
         <% }) %>
       </div>
