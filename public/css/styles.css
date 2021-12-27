@@ -16,12 +16,19 @@ img {
 
 .img-thumbnail {
   padding: 0;
+  width: 500px;
+}
+
+.descTitle {
+  font-weight: 700;
+  margin-top: 5px;
+  margin-left: 10px;
 }
 
 .captionText {
   margin-top: 5px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .pageBottom {
@@ -42,4 +49,9 @@ img {
 .eachCamp a {
   text-decoration: none;
   color: black;
+}
+
+.showImage {
+  width: 500px;
+  margin: 0 auto;
 }

@@ -2,32 +2,30 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-var faker = require("faker");
 var bodyParser = require("body-parser");
 
+//Module Imports
+const Camp = require("./models/camp");
+const Seed = require("./seeds");
+
+//app use
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
+//App connection to the DBs
 mongoose.connect("mongodb://localhost:27017/CampsDB", {
   useNewUrlParser: true,
 });
 
-//CREATE A SCHEMA FOR DATABASE DATA FORMATING
+Seed();
 
-const campSchema = mongoose.Schema({
-  name: String,
-  image: String,
-  description: String,
-});
-
-//CREATE A SINGLE DATA ENTITY MODEL
-const Camp = mongoose.model("Camp", campSchema);
-
+//LANDING PAGE ROUTE
 app.get("/", (req, res) => {
   res.render("landing");
 });
 
+//HOME ROUTE
 app.get("/campgrounds", (req, res) => {
   Camp.find({}, (error, allCamps) => {
     if (error) {
@@ -64,13 +62,16 @@ app.get("/campgrounds/new", (req, res) => {
 
 app.get("/campgrounds/:id", (req, res) => {
   let campId = req.params.id;
-  Camp.findById(campId, (error, result) => {
-    if (error) {
-      console.log(error);
-    } else {
-      res.render("show", { result });
-    }
-  });
+  Camp.findById(campId)
+    .populate("comments")
+    .exec((error, result) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(result);
+        res.render("show", { result });
+      }
+    });
 });
 
 app.listen(3000, (req, res) => {
