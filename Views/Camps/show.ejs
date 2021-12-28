@@ -1,0 +1,53 @@
+<%- include('../partials/header') %> <%- include('../partials/nav') %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead">CampFinder</p>
+      <div class="list-group">
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="img-thumbnail">
+        <img
+          class="showImage image-responsive"
+          src="<%= result.image %>"
+          alt="<%= result.name %>"
+        />
+        <div class="showTitle caption-full">
+          <p class="float-right">$ 9.00/Night</p>
+          <a href="/campgrounds">
+            <h5><%=result.name %></h5>
+          </a>
+          <caption>
+            <p>Description :</p>
+            <p><%= result.description %></p>
+          </caption>
+        </div>
+      </div>
+      <div class="c1 card card-body bg-light">
+        <div class="text-right">
+          <a
+            class="btn btn-success btn-sm"
+            href="/campgrounds/<%= result._id %>/comments/new"
+            >Leave a Review</a
+          >
+        </div>
+        <hr />
+        <% result.comments.forEach(comment => { %>
+        <div class="row">
+          <div class="col-md-12">
+            <span class="authorname"> <%= comment.author %> </span>
+            <span class="float-right">10 Days</span>
+            <p><%= comment.text %></p>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

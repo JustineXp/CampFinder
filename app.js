@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 
 //Module Imports
 const Camp = require("./models/camp");
+const Comment = require("./models/comment");
 const Seed = require("./seeds");
 
 //app use
@@ -31,7 +32,7 @@ app.get("/campgrounds", (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      res.render("campgrounds", { Camps: allCamps });
+      res.render("Camps/campgrounds", { Camps: allCamps });
       console.log(allCamps);
     }
   });
@@ -57,7 +58,7 @@ app.post("/campgrounds", (req, res) => {
 });
 
 app.get("/campgrounds/new", (req, res) => {
-  res.render("new");
+  res.render("Camps/new");
 });
 
 app.get("/campgrounds/:id", (req, res) => {
@@ -69,9 +70,47 @@ app.get("/campgrounds/:id", (req, res) => {
         console.log(error);
       } else {
         console.log(result);
-        res.render("show", { result });
+        res.render("Camps/show", { result });
       }
     });
+});
+
+app.get("/campgrounds/:id/comments/new", (req, res) => {
+  let campId = req.params.id;
+  res.render("Comments/new", { campId });
+});
+
+app.post("/campgrounds/:id/comments", (req, res) => {
+  // Get the Camp Id
+  var CampId = req.params.id;
+
+  var newComment = {
+    text: req.body.comment,
+    author: req.body.author,
+  };
+
+  console.log("====================================");
+  console.log(CampId);
+  console.log("====================================");
+
+  //find Camp by Id
+
+  Camp.findById(CampId, (error, foundCamp) => {
+    if (error) {
+      console.log(error);
+    } else {
+      //create comment
+      Comment.create(newComment, (error, comment) => {
+        if (error) {
+          console.log(error);
+        } else {
+          foundCamp.comments.push(comment);
+          foundCamp.save();
+          res.redirect("/campgrounds/" + CampId);
+        }
+      });
+    }
+  });
 });
 
 app.listen(3000, (req, res) => {
