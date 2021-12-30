@@ -28,13 +28,33 @@
         </div>
       </div>
       <div class="c1 card card-body bg-light">
-        <div class="text-right">
-          <a
-            class="btn btn-success btn-sm"
-            href="/campgrounds/<%= result._id %>/comments/new"
-            >Leave a Review</a
-          >
-        </div>
+        <form action="/campgrounds/<%= result._id %>/comments" method="post">
+          <div class="form-row">
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Type Your Review . . ."
+                name="comment"
+              />
+            </div>
+            <div class="col-3 mr-2">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Your Name"
+                name="author"
+              />
+            </div>
+            <button
+              class="btn btn-outline-success my-2 my-sm-0"
+              type="submit"
+            >
+              Leave a Review
+            </button>
+          </div>
+        </form>
+
         <hr />
         <% result.comments.forEach(comment => { %>
         <div class="row">
