@@ -1,73 +1,64 @@
-<%- include('../partials/header') %> <%- include('../partials/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <p class="lead">CampFinder</p>
-      <div class="list-group">
-        <li class="list-group-item active">Info 1</li>
-        <li class="list-group-item">Info 2</li>
-        <li class="list-group-item">Info 3</li>
-      </div>
-    </div>
-    <div class="col-md-9">
-      <div class="img-thumbnail">
-        <img
-          class="showImage image-responsive"
-          src="<%= result.image %>"
-          alt="<%= result.name %>"
+<% layout('layouts/boilerplate') %>
+<div class="row mt-3">
+  <div class="card p-0 col-md-8 mx-auto">
+    <img
+      src="<%= result.image %>"
+      class="card-img-top"
+      alt="<%= result.name %>"
+    />
+    <div class="card-body">
+      <h5 class="card-title"><%= result.name %></h5>
+      <p class="card-text"><%= result.description %></p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= result.location %></li>
+        <li class="list-group-item">$<%= result.price %>/Night</li>
+      </ul>
+      <form
+        class="d-flex"
+        action="/campgrounds/<%= result._id %>/comments"
+        method="post"
+      >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Type Your Review . . ."
+          name="comment"
+          required
         />
-        <div class="showTitle caption-full">
-          <p class="float-right">$ 9.00/Night</p>
-          <a href="/campgrounds">
-            <h5><%=result.name %></h5>
-          </a>
-          <caption>
-            <p>Description :</p>
-            <p><%= result.description %></p>
-          </caption>
-        </div>
-      </div>
-      <div class="c1 card card-body bg-light">
-        <form action="/campgrounds/<%= result._id %>/comments" method="post">
-          <div class="form-row">
-            <div class="col-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Type Your Review . . ."
-                name="comment"
-              />
-            </div>
-            <div class="col-3 mr-2">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Your Name"
-                name="author"
-              />
-            </div>
-            <button
-              class="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
-            >
-              Leave a Review
-            </button>
-          </div>
-        </form>
 
-        <hr />
-        <% result.comments.forEach(comment => { %>
-        <div class="row">
-          <div class="col-md-12">
-            <span class="authorname"> <%= comment.author %> </span>
-            <span class="float-right">10 Days</span>
-            <p><%= comment.text %></p>
-          </div>
+        <input
+          type="text"
+          class="form-control mx-2"
+          placeholder="Your Name"
+          name="author"
+          required
+        />
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Review
+        </button>
+      </form>
+
+      <a href="/campgrounds/<%= result._id %>/edit" class="btn btn-success"
+        >Edit Camp</a
+      >
+      <form
+        class="d-inline"
+        action="/campgrounds/<%= result._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger">Delete</button>
+      </form>
+
+      <% result.comments.forEach(comment => { %>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <span class="authorname"> <%= comment.author %> </span>
+          <span class="float-right text-end">10 Days</span>
+          <p><%= comment.text %></p>
         </div>
-        <% }) %>
       </div>
+      <% }) %>
     </div>
   </div>
 </div>
-
-<%- include('../partials/footer') %>

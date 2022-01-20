@@ -64,6 +64,8 @@ var seedData = [
   },
   {
     name: "Olakira Camp",
+    location: "Serengeti, Tanzania",
+    price: 20,
     image:
       "https://www.asiliaafrica.com/media/wbckbjrk/olakira-camp-star-gazing-tent-under-the-milkyway.jpg?anchor=center&mode=crop&quality=80&width=720&height=405&rnd=132272860952270000",
     description:

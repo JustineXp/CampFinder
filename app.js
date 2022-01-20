@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
+const ejsMate = require("ejs-mate");
+const methodOverride = require("method-override");
 
 //Module Imports
 const Camp = require("./models/camp");
@@ -12,6 +14,8 @@ const Seed = require("./seeds");
 //app use
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 
 //App connection to the DBs
@@ -40,21 +44,28 @@ app.get("/campgrounds", (req, res) => {
 
 app.post("/campgrounds", (req, res) => {
   //   res.send("You have Hit the Campgrounds Post Page");
-  var newCamp = {
-    name: req.body.camp,
-    image: req.body.image,
-    description: req.body.description,
-  };
-  console.log(newCamp);
+  console.log("===========================================================");
+  console.log(req);
+  console.log("===========================================================");
+  if (req.body.camp === 0) {
+    res.redirect("/new/campgrounds");
+  } else {
+    var newCamp = {
+      name: req.body.camp,
+      image: req.body.image,
+      description: req.body.description,
+    };
+    console.log(newCamp);
 
-  Camp.create(newCamp, (error, newCamp) => {
-    if (error) {
-      console.log(error);
-    } else {
-      res.redirect("/campgrounds");
-      console.log(newCamp);
-    }
-  });
+    Camp.create(newCamp, (error, newCamp) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.redirect("/campgrounds");
+        console.log(newCamp);
+      }
+    });
+  }
 });
 
 app.get("/campgrounds/new", (req, res) => {
@@ -78,6 +89,11 @@ app.get("/campgrounds/:id", (req, res) => {
 app.get("/campgrounds/:id/comments/new", (req, res) => {
   let campId = req.params.id;
   res.render("Comments/new", { campId });
+});
+
+app.get("/campgrounds/:id/edit", async (req, res) => {
+  const campground = await Camp.findById(req.params.id);
+  res.render("Camps/edit", { campground });
 });
 
 app.post("/campgrounds/:id/comments", (req, res) => {
@@ -111,6 +127,30 @@ app.post("/campgrounds/:id/comments", (req, res) => {
       });
     }
   });
+});
+
+app.put("/campgrounds/:id/edit", async (req, res) => {
+  var id = req.params.id;
+  var updatedCamp = {
+    name: req.body.name,
+    image: req.body.image,
+    description: req.body.description,
+    location: req.body.location,
+    price: req.body.price,
+  };
+
+  await Camp.findByIdAndUpdate(id, updatedCamp).catch((error) => {
+    console.log("///////////////////////////////");
+    console.log(error);
+  });
+
+  res.redirect("/campgrounds/" + id);
+});
+
+app.delete("/campgrounds/:id", async (req, res) => {
+  var id = req.params.id;
+  await Camp.findByIdAndDelete(id);
+  res.redirect("/campgrounds");
 });
 
 app.listen(3000, (req, res) => {

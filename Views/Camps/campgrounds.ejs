@@ -1,14 +1,14 @@
-<%- include('../partials/header') %> <%- include('../partials/nav') %>
+<% layout('layouts/boilerplate') %>
 
 <div class="container">
-  <header class="centered jumbotron">
+  <header class="centered">
     <div class="container">
       <h1>Welcome to CampFinder</h1>
       <p>Locate Camps across the Globe with just a click</p>
-      <a class="btn btn-primary" href="/campgrounds/new"> Add New Camp</a>
+      <a class="btn btn-primary my-2" href="/campgrounds/new"> Add New Camp</a>
     </div>
   </header>
-  <div class="centered">
+  <div>
     <div class="container">
       <div class="row">
         <% Camps.forEach(camp => { %>
@@ -23,5 +23,3 @@
     </div>
   </div>
 </div>
-
-<%- include('../partials/footer') %>

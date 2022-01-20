@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate') %>
+<div class="container">
+    <form action="/campgrounds/<%= campground._id %>/edit?_method=PUT" method="post">
+        
+<div class=" resized col-md-4 col-sm-6">
+      <h1>Edit Campground</h1>
+    <div class="form-group mb-3">
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        value="<%= campground.name %>"
+      />
+    </div>
+    <div class="form-group mb-3">
+        <label class="visually-hidden" for="autoSizingInputGroup">Price</label>
+        <div class="input-group">
+          <div class="input-group-text">$</div>
+          <input type="text" class="form-control" id="autoSizingInputGroup" name="price" value="<%= campground.price %>">
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <input
+          class="form-control"
+          type="text"
+          name="image"
+          value="<%= campground.image %>"
+        />
+      </div>
+    <div class="form-group mb-3">
+      <input
+        class="form-control"
+        type="text"
+        name="location"
+        value="<%= campground.location %>"
+      />
+    </div>
+    <div class="form-group">
+      <textarea class="form-control mb-3" rows="3" name="description" ><%= campground.description %></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
+</div>
+</form>
